@@ -7,38 +7,41 @@
 #include "listdin.h"
 
 int main() {
-  ListDin l;
+  ListDin l, maxLeft, minRight;
   CreateListDin(&l, 100000);
   readList(&l);
-  
-  IdxType i,j;
+
+  CreateListDin(&maxLeft, 100000);
+  CreateListDin(&minRight, 100000);
+
+  ELMT(maxLeft, 0) = ELMT(l, 0);
+  for (IdxType i = 1; i < listLength(l); i++) {
+    ELMT(maxLeft, i) = (ELMT(l, i) > ELMT(maxLeft, i-1)) ? ELMT(l, i) : ELMT(maxLeft, i-1);
+  }
+
+
+  ELMT(minRight, listLength(l)-1) = ELMT(l, listLength(l)-1);
+  for (IdxType i = listLength(l)-2; i >= 0; i--) {
+    ELMT(minRight, i) = (ELMT(l, i) < ELMT(minRight, i+1)) ? ELMT(l, i) : ELMT(minRight, i+1);
+  }
+
+
   int count = 0;
-  boolean bisa = true;
-
-  for (i=0;i<listLength(l);i++) {
-    for (j=0;j<i;j++) {
-      if (ELMT(l,i) > ELMT(l,j)) {
-        bisa = true;
-      }
-      else {
-        bisa = false;
-        break;
+  for (IdxType i = 0; i < listLength(l); i++) {
+    if (i==0) {
+      if (ELMT(minRight, i+1) >= ELMT(l, i)) {
+        count++;
       }
     }
-    if (bisa) {
-      for (j=i+1;j<listLength(l);j++) {
-        if (ELMT(l,i) < ELMT(l,j)) {
-          bisa = true;
-        }
-        else {
-          bisa = false;
-          break;
-        }
+    if (i==listLength(l)-1) {
+      if (ELMT(maxLeft, i-1) <= ELMT(l, i)) {
+        count++;
       }
     }
-
-    if (bisa) {
-      count++;
+    if (i != 0 && i != listLength(l)-1) {
+      if (ELMT(maxLeft, i-1) <= ELMT(l, i) && ELMT(l, i) <= ELMT(minRight, i+1)) {
+        count++;
+      }
     }
   }
 
