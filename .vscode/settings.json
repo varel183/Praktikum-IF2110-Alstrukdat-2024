@@ -11,7 +11,10 @@
         "tuple": "c",
         "type_traits": "c",
         "utility": "c",
-        "mesinkarakter.h": "c"
+        "mesinkarakter.h": "c",
+        "stack.h": "c",
+        "stdio.h": "c",
+        "listlinier.c": "cpp"
     },
     "C_Cpp_Runner.cCompilerPath": "gcc",
     "C_Cpp_Runner.cppCompilerPath": "g++",
